@@ -7,7 +7,15 @@ resource "aws_instance" "webapp" {
   instance_type = var.instance_type
   ami           = data.aws_ami.amazonlx.id
   key_name      = var.keyname
-  vpc_security_group_ids = [aws_security_group.websg.id]
+  vpc_security_group_ids = [aws_security_group.websg.id , aws_security_group.sshsg.id]
+  user_data  = <<-EOF
+         #!/bin/bash
+          sudo yum -y install httpd
+          sudo systemctl start httpd
+          sudo systemctl enable httpd
+          sudo echo "welcome to deveops" > /var/www/html/index.html
+          EOF
+
   tags = {
     Name        = "webappdev01"
     environment = "develop"
