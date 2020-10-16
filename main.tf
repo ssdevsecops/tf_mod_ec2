@@ -9,10 +9,10 @@ resource "aws_instance" "webapp" {
   key_name      = var.keyname
   vpc_security_group_ids = [aws_security_group.websg.id]
   tags = {
-    Name        = "webapp01"
-    environment = "dev"
+    Name        = "webappdev01"
+    environment = "develop"
     timetolive  = "10"
-    backup      = "yes"
+    backup      = "no"
   }
 }
 
