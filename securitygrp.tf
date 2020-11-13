@@ -1,6 +1,6 @@
 resource "aws_security_group" "websg" {
     count = var.enable_security_grp ? 1 : 0
-    name = 
+    name = "websg"
     description = "allows http traffic"
 
     ingress {
