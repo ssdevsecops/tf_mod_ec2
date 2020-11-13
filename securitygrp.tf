@@ -1,5 +1,6 @@
 resource "aws_security_group" "websg" {
-    name = "websg"
+    count = var.enable_security_grp ? 1 : 0
+    name = 
     description = "allows http traffic"
 
     ingress {
@@ -13,7 +14,9 @@ resource "aws_security_group" "websg" {
     }
 }
 
+//<CONDITION> ? <TRUE_VAL> : <FALSE_VAL>
 resource "aws_security_group" "sshsg" {
+    count = var.enable_security_grp ? 1 : 0
     name = "sshsg"
     description = "allows ssh traffic"
 

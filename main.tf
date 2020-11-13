@@ -4,10 +4,11 @@ provider "aws" {
 
 
 resource "aws_instance" "webapp" {
+  count         = var.enable_ec2 ? var.instance_count : 0 
   instance_type = var.instance_type
   ami           = data.aws_ami.amazonlx.id
   key_name      = var.keyname
-  vpc_security_group_ids = [aws_security_group.websg.id , aws_security_group.sshsg.id]
+//  vpc_security_group_ids = [aws_security_group.websg.id , aws_security_group.sshsg.id]
   user_data  = <<-EOF
          #!/bin/bash
           sudo yum -y install httpd
@@ -17,7 +18,7 @@ resource "aws_instance" "webapp" {
           EOF
 
   tags = {
-    Name        = "webappdev01"
+    Name        = "webappdev0${count.index}"
     environment = "develop"
     timetolive  = "10"
     backup      = "yes"
