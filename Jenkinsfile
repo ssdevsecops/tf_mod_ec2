@@ -1,19 +1,24 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('checkout') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: 'main', url: 'https://github.com/ssdevsecops/tf_mod_ec2.git'
-
-                // Run Maven on a Unix agent.
-                sh "terraform init"
-                sh "terraform plan"
-
-            
-            }
-
-            
+                git branch: 'main', url: 'https://github.com/ssdevsecops/tf_mod_ec2.git'     
+            }    
         }
+        stage('init') {
+          steps {
+            sh 'terraform init'
+          }
+        }
+        stage('plan') {
+          steps {
+            sh 'terraform plan'
+          }
+        } 
+
+
+
     }
 }
